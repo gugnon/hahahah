@@ -1,3 +1,11 @@
+getgenv().Prediction = 0
+getgenv().AimPart = ""
+getgenv().Key = ""
+getgenv().DisableKey = ""
+
+getgenv().FOV = true
+getgenv().ShowFOV = false
+getgenv().FOVSize = 0
 --// Variables (Service)
 
 local Players = game:GetService("Players")
