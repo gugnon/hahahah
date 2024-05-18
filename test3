@@ -1,34 +1,33 @@
--- List of valid keys
-local validKeys = {
-    "key1",
-    "key2",
-    "key3",
-    "key4"
+getgenv().Vanity = {
+    ["Main"] = {
+        ["Key"] = "Poptart",
+    },
 }
 
--- Function to check if the input key is valid
-local function isValidKey(inputKey)
-    for _, key in ipairs(validKeys) do
-        if key == inputKey then
+local function checkKey(key)
+    local pastebinUrl = "https://pastebin.com/raw/22QEtmZ8"
+    local response = syn.request({
+        Url = pastebinUrl,
+        Method = "GET"
+    })
+    
+    if response.Success then
+        local content = response.Body
+        if string.find(content, key) then
             return true
+        else
+            return false
         end
+    else
+        return false
     end
-    return false
 end
 
--- Prompt the user to enter a key
-print("Please enter your key:")
-local userInputKey = io.read()
+local keyExists = checkKey(getgenv().Vanity.Main.Key)
 
--- Validate the key
-if isValidKey(userInputKey) then
-    print("Key is valid. Loading script...")
-
-    -- Loading the actual script
-    -- Example: loadstring(game:HttpGet("https://your-script-url.com"))()
+if keyExists then
+    print("Vanity Ontop")
 else
-    -- Kick the player if the key is invalid
-    local Players = game:GetService("Players")
-    local player = Players.LocalPlayer
-    player:Kick("Invalid key. Access denied.")
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Leavinbodys/Vanity-Comps/main/vanity%20unwl.lua"))()
+    game.Players.LocalPlayer:Kick("You are not whitelisted")
 end
