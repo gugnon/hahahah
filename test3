@@ -20,7 +20,7 @@ if success and response.Success then
     -- Check if the key exists in the Pastebin content
     if string.find(content, key) then
         -- Attempt to load and execute the script
-        local scriptUrl = ""
+        local scriptUrl = "https://raw.githubusercontent.com/gugnon/hahahah/main/main"
         local scriptSuccess, scriptContent = pcall(function()
             return game:HttpGet(scriptUrl)
         end)
