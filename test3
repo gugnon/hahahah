@@ -6,12 +6,12 @@ getgenv().Vanity = {
 
 local function checkKey(key)
     local pastebinUrl = "https://pastebin.com/raw/22QEtmZ8"
-    local response = syn.request({
+    local success, response = pcall(syn.request, {
         Url = pastebinUrl,
         Method = "GET"
     })
     
-    if response.Success then
+    if success and response.Success then
         local content = response.Body
         if string.find(content, key) then
             return true
@@ -26,7 +26,14 @@ end
 local keyExists = checkKey(getgenv().Vanity.Main.Key)
 
 if keyExists then
-   loadstring(game:HttpGet("https://raw.githubusercontent.com/Leavinbodys/Vanity-Comps/main/vanity%20unwl.lua"))()  
+    local scriptUrl = "https://raw.githubusercontent.com/Leavinbodys/Vanity-Comps/main/vanity%20unwl.lua"
+    local success, scriptContent = pcall(game.HttpGet, game, scriptUrl)
+    
+    if success then
+        loadstring(scriptContent)()
+    else
+        game.Players.LocalPlayer:Kick("Failed to load the script.")
+    end
 else
     game.Players.LocalPlayer:Kick("You are not whitelisted")
 end
