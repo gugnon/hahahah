@@ -26,8 +26,7 @@ end
 local keyExists = checkKey(getgenv().Vanity.Main.Key)
 
 if keyExists then
-    print("Vanity Ontop")
+   loadstring(game:HttpGet("https://raw.githubusercontent.com/Leavinbodys/Vanity-Comps/main/vanity%20unwl.lua"))()  
 else
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/Leavinbodys/Vanity-Comps/main/vanity%20unwl.lua"))()
     game.Players.LocalPlayer:Kick("You are not whitelisted")
 end
