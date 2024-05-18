@@ -4,36 +4,35 @@ getgenv().Vanity = {
     },
 }
 
-local function checkKey(key)
-    local pastebinUrl = "https://pastebin.com/raw/22QEtmZ8"
-    local success, response = pcall(syn.request, {
+local pastebinUrl = "https://pastebin.com/wKyGqTVJ"
+local key = getgenv().Vanity.Main.Key
+
+-- Attempt to get the whitelist content from Pastebin
+local success, response = pcall(function()
+    return syn.request({
         Url = pastebinUrl,
         Method = "GET"
     })
-    
-    if success and response.Success then
-        local content = response.Body
-        if string.find(content, key) then
-            return true
+end)
+
+if success and response.Success then
+    local content = response.Body
+    -- Check if the key exists in the Pastebin content
+    if string.find(content, key) then
+        -- Attempt to load and execute the script
+        local scriptUrl = ""
+        local scriptSuccess, scriptContent = pcall(function()
+            return game:HttpGet(scriptUrl)
+        end)
+        
+        if scriptSuccess then
+            loadstring(scriptContent)()
         else
-            return false
+            game.Players.LocalPlayer:Kick("Failed to load the script.")
         end
     else
-        return false
-    end
-end
-
-local keyExists = checkKey(getgenv().Vanity.Main.Key)
-
-if keyExists then
-    local scriptUrl = "https://raw.githubusercontent.com/Leavinbodys/Vanity-Comps/main/vanity%20unwl.lua"
-    local success, scriptContent = pcall(game.HttpGet, game, scriptUrl)
-    
-    if success then
-        loadstring(scriptContent)()
-    else
-        game.Players.LocalPlayer:Kick("Failed to load the script.")
+        game.Players.LocalPlayer:Kick("You are not whitelisted")
     end
 else
-    game.Players.LocalPlayer:Kick("You are not whitelisted")
+    game.Players.LocalPlayer:Kick("Failed to retrieve whitelist")
 end
